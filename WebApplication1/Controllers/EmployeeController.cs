@@ -116,7 +116,7 @@ namespace WebApplication1.Controllers
                 case "Cancel":
                     return RedirectToAction("Index");
             }
-            return new EmptyResult();
+            return new EmptyResult(); 
         }
     }
 }
