@@ -40,6 +40,6 @@ namespace WebApplication1.BusinessLayer
             salesDal.Employees.Add(e);
             salesDal.SaveChanges();
             return e;
-        }
+        } 
     }
 }
