@@ -11,10 +11,10 @@ namespace WebApplication1.DataAccessLayer
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EmptyResult>().ToTable("TblEmployee");
+            modelBuilder.Entity<Employee>().ToTable("TblEmployee");
             base.OnModelCreating(modelBuilder);
         }
-        public DbSet<EmptyResult> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
     }
 }

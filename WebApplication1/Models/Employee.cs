@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.Models
 {
-    public class EmptyResult
+    public class Employee
     {
         [Key]
         public int EmployeeId { get; set; }

@@ -9,7 +9,7 @@ namespace WebApplication1.BusinessLayer
 {
     public class EmployeeBusinessLayer
     {
-        public List<EmptyResult> GetEmployees()
+        public List<Employee> GetEmployees()
         {
             //List<Employee> employees = new List<Employee>();
             //Employee emp = new Employee();
@@ -34,7 +34,7 @@ namespace WebApplication1.BusinessLayer
             SalesERPDAL salesDal = new SalesERPDAL();
             return salesDal.Employees.ToList();
         }
-        public EmptyResult SaveEmployee(EmptyResult e)
+        public Employee SaveEmployee(Employee e)
         {
             SalesERPDAL salesDal = new SalesERPDAL();
             salesDal.Employees.Add(e);

@@ -71,10 +71,10 @@ namespace WebApplication1.Controllers
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
             employeeListViewModel.UserName = User.Identity.Name;
             EmployeeBusinessLayer empBal = new EmployeeBusinessLayer();
-            List<Models.EmptyResult> employees = empBal.GetEmployees();
+            List<Models.Employee> employees = empBal.GetEmployees();
             List<EmployeeViewModel> empViewModels = new List<EmployeeViewModel>();
 
-            foreach (Models.EmptyResult emp in employees)
+            foreach (Models.Employee emp in employees)
             {
                 EmployeeViewModel empViewModel =
                       new EmployeeViewModel();
@@ -106,7 +106,7 @@ namespace WebApplication1.Controllers
         }
         [AdminFilter]
         [HeaderFooterFilter]
-        public ActionResult SaveEmployee(Models.EmptyResult e, string BtnSubmit)
+        public ActionResult SaveEmployee(Models.Employee e, string BtnSubmit)
         {
             switch (BtnSubmit)
             {
