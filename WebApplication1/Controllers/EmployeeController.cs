@@ -31,6 +31,7 @@ namespace WebApplication1.Controllers
         {
             return "Hi, I am not action method";
         }
+        [Authorize]
         public ActionResult Index()
         {
             //if(false)
@@ -70,7 +71,7 @@ namespace WebApplication1.Controllers
             List<Employee> employees = empBal.GetEmployees();
             List<EmployeeViewModel> empViewModels = new List<EmployeeViewModel>();
 
-            foreach(Employee emp in employees)
+            foreach (Employee emp in employees)
             {
                 EmployeeViewModel empViewModel =
                       new EmployeeViewModel();
@@ -78,7 +79,7 @@ namespace WebApplication1.Controllers
                 empViewModel.EmployeeName =
                       emp.FirstName + " " + emp.LastName;
 
-                empViewModel.Salary = emp.Salary.ToString("C");
+                empViewModel.Salary = emp.Salary.GetValueOrDefault().ToString("C");
                 if (emp.Salary > 15000)
                 {
                     empViewModel.SalaryColor = "yellow";
@@ -96,7 +97,8 @@ namespace WebApplication1.Controllers
         }
         public ActionResult AddNew()
         {
-            return View("CreateEmployee");
+            //return View("CreateEmployee");
+            return View("CreateEmployee", new CreateEmployeeViewModel());
         }
         public ActionResult SaveEmployee(Employee e, string BtnSubmit)
         {
@@ -111,12 +113,23 @@ namespace WebApplication1.Controllers
                     }
                     else
                     {
-                        return View("CreateEmployee");
+                        CreateEmployeeViewModel vm = new CreateEmployeeViewModel();
+                        vm.FirstName = e.FirstName;
+                        vm.LastName = e.LastName;
+                        if (e.Salary.HasValue)
+                        {
+                            vm.Salary = e.Salary.ToString();
+                        }
+                        else
+                        {
+                            vm.Salary = ModelState["Salary"].Value.AttemptedValue;
+                        }
+                        return View("CreateEmployee", vm); // Day 4 Change - Passing e here
                     }
                 case "Cancel":
                     return RedirectToAction("Index");
             }
-            return new EmptyResult(); 
+            return new EmptyResult();
         }
     }
 }

@@ -15,19 +15,18 @@ namespace WebApplication1.Models
         public string FirstName { get; set; }
         [StringLength(5, ErrorMessage = "Last Name length should not be greater than 5")]
         public string LastName { get; set; }
-        public int Salary { get; set; }
+        public int? Salary { get; set; }
     }
-    public class FirstNameValidation : ValidationAttribute
-    {
+    public class FirstNameValidation: ValidationAttribute {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value == null) // Checking for Empty Value
+            if(value == null)
             {
-                return new ValidationResult("Please Provide First Name");
+                return new ValidationResult("Please Provide first name");
             }
             else
             {
-                if (value.ToString().Contains("@"))
+                if(value.ToString().Contains("@"))
                 {
                     return new ValidationResult("First Name should contain @");
                 }
