@@ -9,7 +9,7 @@ namespace WebApplication1.BusinessLayer
 {
     public class EmployeeBusinessLayer
     {
-        public List<Employee> GetEmployees()
+        public List<EmptyResult> GetEmployees()
         {
             //List<Employee> employees = new List<Employee>();
             //Employee emp = new Employee();
@@ -34,19 +34,32 @@ namespace WebApplication1.BusinessLayer
             SalesERPDAL salesDal = new SalesERPDAL();
             return salesDal.Employees.ToList();
         }
-        public Employee SaveEmployee(Employee e)
+        public EmptyResult SaveEmployee(EmptyResult e)
         {
             SalesERPDAL salesDal = new SalesERPDAL();
             salesDal.Employees.Add(e);
             salesDal.SaveChanges();
             return e;
         } 
-        public bool IsValidUser(UserDetails u)
+        //public bool IsValidUser(UserDetails u)
+        //{
+        //    if(u.UserName == "Admin" && u.Password == "Admin"){
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        public UserStatus GetUserValidity(UserDetails u)
         {
-            if(u.UserName == "Admin" && u.Password == "Admin"){
-                return true;
+            if(u.UserName == "Admin" && u.Password == "Admin")
+            {
+                return UserStatus.AuthenticatedAdmin;
+            } else if(u.UserName == "Sukesh" && u.Password == "Sukesh")
+            {
+                return UserStatus.AuthenticatedUser;
+            } else
+            {
+                return UserStatus.NonAuthenticatedUser;
             }
-            return false;
         }
     }
 }

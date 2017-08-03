@@ -22,16 +22,24 @@ namespace WebApplication1.Controllers
             if(ModelState.IsValid)
             {
                 EmployeeBusinessLayer bal = new EmployeeBusinessLayer();
-                if (bal.IsValidUser(u))
+                UserStatus status = bal.GetUserValidity(u);
+                bool IsAdmin = false;
+                if(status == UserStatus.AuthenticatedAdmin)
                 {
-                    FormsAuthentication.SetAuthCookie(u.UserName, false);
-                    return RedirectToAction("Index", "Employee");
+                    IsAdmin = true;
+                } 
+                else if(status == UserStatus.AuthenticatedUser)
+                {
+                    IsAdmin = false;
                 }
                 else
                 {
                     ModelState.AddModelError("CredentialError", "Invalid Username or Password");
                     return View("Login");
                 }
+                FormsAuthentication.SetAuthCookie(u.UserName, false);
+                Session["IsAdmin"] = IsAdmin;
+                return RedirectToAction("Index", "Employee");
             }
             else
             {

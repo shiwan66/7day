@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.BusinessLayer;
+using WebApplication1.Filters;
 using WebApplication1.Models;
 using WebApplication1.ViewModels;
 
@@ -32,6 +33,7 @@ namespace WebApplication1.Controllers
             return "Hi, I am not action method";
         }
         [Authorize]
+        [HeaderFooterFilter]
         public ActionResult Index()
         {
             //if(false)
@@ -69,10 +71,10 @@ namespace WebApplication1.Controllers
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
             employeeListViewModel.UserName = User.Identity.Name;
             EmployeeBusinessLayer empBal = new EmployeeBusinessLayer();
-            List<Employee> employees = empBal.GetEmployees();
+            List<Models.EmptyResult> employees = empBal.GetEmployees();
             List<EmployeeViewModel> empViewModels = new List<EmployeeViewModel>();
 
-            foreach (Employee emp in employees)
+            foreach (Models.EmptyResult emp in employees)
             {
                 EmployeeViewModel empViewModel =
                       new EmployeeViewModel();
@@ -92,18 +94,19 @@ namespace WebApplication1.Controllers
                 empViewModels.Add(empViewModel);
             }
             employeeListViewModel.Employees = empViewModels;
-            employeeListViewModel.FooterData = new FooterViewModel();
-            employeeListViewModel.FooterData.CompanyName = "StepByStepSchools";//Can be set to dynamic value
-            employeeListViewModel.FooterData.Year = DateTime.Now.Year.ToString();
             return View("Index", employeeListViewModel);
 
         }
+        [AdminFilter]
+        [HeaderFooterFilter]
         public ActionResult AddNew()
         {
-            //return View("CreateEmployee");
-            return View("CreateEmployee", new CreateEmployeeViewModel());
+            CreateEmployeeViewModel employeeListViewModel = new CreateEmployeeViewModel();
+            return View("CreateEmployee", employeeListViewModel);
         }
-        public ActionResult SaveEmployee(Employee e, string BtnSubmit)
+        [AdminFilter]
+        [HeaderFooterFilter]
+        public ActionResult SaveEmployee(Models.EmptyResult e, string BtnSubmit)
         {
             switch (BtnSubmit)
             {
@@ -132,7 +135,19 @@ namespace WebApplication1.Controllers
                 case "Cancel":
                     return RedirectToAction("Index");
             }
-            return new EmptyResult();
+            return new System.Web.Mvc.EmptyResult();
+        }
+        [ChildActionOnly]
+        public ActionResult GetAddNewLink()
+        {
+            if(Convert.ToBoolean(Session["IsAdmin"]))
+            {
+                return PartialView("AddNewLink");
+            }
+            else
+            {
+                return new System.Web.Mvc.EmptyResult();
+            }
         }
     }
 }
