@@ -34,6 +34,7 @@ namespace WebApplication1.Controllers
         }
         [Authorize]
         [HeaderFooterFilter]
+        [Route("Employee/List")]
         public ActionResult Index()
         {
             //if(false)

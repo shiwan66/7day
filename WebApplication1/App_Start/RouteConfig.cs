@@ -12,6 +12,12 @@ namespace WebApplication1
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.MapMvcAttributeRoutes();
+            routes.MapRoute(
+                name: "UPload",
+                url: "Employee/BulkUpload",
+                defaults: new { controller = "BulkUpload", action = "Index" }
+            );
 
             routes.MapRoute(
                 name: "Default",

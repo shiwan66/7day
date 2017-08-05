@@ -8,10 +8,12 @@ using WebApplication1.ViewModels;
 using WebApplication1.Models;
 using System.IO;
 using WebApplication1.BusinessLayer;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace WebApplication1.Controllers
 {
-    public class BulkUploadController : Controller
+    public class BulkUploadController : AsyncController
     {
         // GET: BulkUpload
         [AdminFilter]
@@ -20,12 +22,14 @@ namespace WebApplication1.Controllers
         {
             return View(new FileUploadViewModel());
         }
-        public ActionResult Upload(FileUploadViewModel model)
+        public async Task<ActionResult> Upload(FileUploadViewModel model)
         {
-            List<Employee> employees = GetEmployees(model);
+            int t1 = Thread.CurrentThread.ManagedThreadId;
+            List<Employee> employees = await Task.Factory.StartNew<List<Employee>>(() => GetEmployees(model));
+            int t2 = Thread.CurrentThread.ManagedThreadId;
             EmployeeBusinessLayer bal = new EmployeeBusinessLayer();
             bal.UploadEmployees(employees);
-            return RedirectToAction("Employee", "Index");
+            return RedirectToAction("Index", "Employee");
         }
         public List<Employee> GetEmployees(FileUploadViewModel model)
         {
