@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using WebApplication1.Models;
+using Employees.Entities;
 
-namespace WebApplication1.DataAccessLayer
+namespace Employees.Data.DataAccessLayer
 {
     public class SalesERPDAL:DbContext
     {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.Models;
-using WebApplication1.BusinessLayer;
+using Employees.Entities;
+using Business.Service;
 using System.Web.Security;
 
 namespace WebApplication1.Controllers

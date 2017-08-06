@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.BusinessLayer;
 using WebApplication1.Filters;
-using WebApplication1.Models;
+using Employees.Entities;
+using Business.Service;
 using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
@@ -72,10 +72,10 @@ namespace WebApplication1.Controllers
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
             employeeListViewModel.UserName = User.Identity.Name;
             EmployeeBusinessLayer empBal = new EmployeeBusinessLayer();
-            List<Models.Employee> employees = empBal.GetEmployees();
+            List<Employee> employees = empBal.GetEmployees();
             List<EmployeeViewModel> empViewModels = new List<EmployeeViewModel>();
 
-            foreach (Models.Employee emp in employees)
+            foreach (Employee emp in employees)
             {
                 EmployeeViewModel empViewModel =
                       new EmployeeViewModel();
@@ -107,7 +107,7 @@ namespace WebApplication1.Controllers
         }
         [AdminFilter]
         [HeaderFooterFilter]
-        public ActionResult SaveEmployee(Models.Employee e, string BtnSubmit)
+        public ActionResult SaveEmployee(Employee e, string BtnSubmit)
         {
             switch (BtnSubmit)
             {

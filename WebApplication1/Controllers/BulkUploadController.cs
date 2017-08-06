@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Filters;
 using WebApplication1.ViewModels;
-using WebApplication1.Models;
+using Employees.Entities;
+using Business.Service;
 using System.IO;
-using WebApplication1.BusinessLayer;
 using System.Threading.Tasks;
 using System.Threading;
 

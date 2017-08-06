@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebApplication1.Models;
-using WebApplication1.DataAccessLayer;
+using Employees.Data;
+using Employees.Entities;
+using Employees.Data.DataAccessLayer;
 
-namespace WebApplication1.BusinessLayer
+namespace Business.Service
 {
     public class EmployeeBusinessLayer
     {
@@ -35,7 +36,7 @@ namespace WebApplication1.BusinessLayer
             return salesDal.Employees.ToList();
         }
 
-        internal void UploadEmployees(List<Employee> employees)
+        public void UploadEmployees(List<Employee> employees)
         {
             SalesERPDAL salesDal = new SalesERPDAL();
             salesDal.Employees.AddRange(employees);
