@@ -35,7 +35,7 @@ namespace WebApplication1.BusinessLayer
             return salesDal.Employees.ToList();
         }
 
-        internal void UploadEmployees(List<Employee> employees)
+        public void UploadEmployees(List<Employee> employees)
         {
             SalesERPDAL salesDal = new SalesERPDAL();
             salesDal.Employees.AddRange(employees);
